@@ -1,5 +1,4 @@
 import socket
-import random
 import json
 from World import World
 
@@ -20,8 +19,18 @@ while True:
 
 	if 'gamestate' in data:
 		w = World( data )
-		print(w.superpellets)
-		move = w.getnextmove( w.me['x'], w.me['y'], w.superpellets[0]['x'], w.superpellets[0]['y'] )
 
+		# Adding targets
+		targets = []
+
+		for sp in w.superpellets:
+			targets.append(sp)
+
+		# Consuming targets
+		if len(targets) > 0:
+			target = targets.pop()
+			move = w.getnextmove( target['x'], target['y'] )
+
+		# Make move
 		if move:
 			s.send( move )
