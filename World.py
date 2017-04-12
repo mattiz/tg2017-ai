@@ -15,6 +15,7 @@ class World:
 
     def createMap(self, data):
         newMap = []
+        self.superpellets = []
 
         for y, row in enumerate(data['gamestate']['map']['content']):
             newRow = []
@@ -51,22 +52,23 @@ class World:
     def getnextmove(self, startx, starty, endx, endy):
         path = self.getpath(startx, starty, endx, endy)
 
-        x1 = path[0][0]
-        y1 = path[0][1]
-        x2 = path[1][0]
-        y2 = path[1][1]
+        if len(path) > 1:
+            x1 = path[0][0]
+            y1 = path[0][1]
+            x2 = path[1][0]
+            y2 = path[1][1]
 
-        if x2 > x1:
-            return b'RIGHT'
+            if x2 > x1:
+                return b'RIGHT'
 
-        if( x2 < x1 ):
-            return b'LEFT'
+            if( x2 < x1 ):
+                return b'LEFT'
 
-        if( y2 > y1 ):
-            return b'DOWN'
+            if( y2 > y1 ):
+                return b'DOWN'
 
-        if( y2 < y1 ):
-            return b'UP'
+            if( y2 < y1 ):
+                return b'UP'
 
 
 

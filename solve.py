@@ -20,5 +20,8 @@ while True:
 
 	if 'gamestate' in data:
 		w = World( data )
+		print(w.superpellets)
 		move = w.getnextmove( w.me['x'], w.me['y'], w.superpellets[0]['x'], w.superpellets[0]['y'] )
-		s.send( move )
+
+		if move:
+			s.send( move )
