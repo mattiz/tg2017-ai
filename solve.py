@@ -1,7 +1,7 @@
 import socket
-import sys
 import random
 import json
+from World import World
 
 
 s = socket.socket()
@@ -14,10 +14,11 @@ s.send(b"NAME MooG\n")
 
 while True: 
 	reply = s.recv(4096)
-	#print( json.dumps( reply, sort_keys=True, indent=4, separators=(',', ': ')))
 
-	print(reply)
+	d = str(reply)[2:-3]
+	data = json.loads( d )
 
-	moves = [b'UP', b'DOWN', b'LEFT', b'RIGHT']
-	move = moves[random.randint(0, 3)]
-	s.send( move )
+	if 'gamestate' in data:
+		w = World( data )
+		move = w.getnextmove( w.me['x'], w.me['y'], w.superpellets[0]['x'], w.superpellets[0]['y'] )
+		s.send( move )
