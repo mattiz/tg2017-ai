@@ -1,6 +1,7 @@
 from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.grid import Grid
 from pathfinding.finder.a_star import AStarFinder
+from collections import OrderedDict
 
 
 class World:
@@ -18,7 +19,6 @@ class World:
         self.createMap(data)
         self.me = data['gamestate']['you']
         self.others = data['gamestate']['others']
-        print(self.others)
 
 
     #
@@ -50,21 +50,39 @@ class World:
 
 
     #
+    # Sort list of objects based on shortest path
+    #
+    def shortestPath(self, objects):
+        result = []
+
+        for o in objects[0:]:
+            path = self.getpath(o['x'], o['y'])
+            o['pathlength'] = len(path)
+            result.append(o)
+
+        return sorted( result, key=lambda k: k['pathlength'])
+
+    #
     # Calculate paths to a target
     #
     def getpath(self, endx, endy):
-        grid = Grid(matrix=self.map)
-
-        finder = AStarFinder(diagonal_movement=DiagonalMovement.never)
-
         startx = self.me['x']
         starty = self.me['y']
 
+        grid = Grid(matrix=self.map)
+        finder = AStarFinder(diagonal_movement=DiagonalMovement.never)
+
+        start = grid.node(startx, starty)
+        end = grid.node(endx, endy)
+
         path, runs = finder.find_path(
-            grid.node(startx, starty),
-            grid.node(endx, endy),
+            start,
+            end,
             grid
         )
+
+        #print('operations:', runs, 'path length:', len(path))
+        #print(grid.grid_str(path=path, start=start, end=end))
 
         return path
 

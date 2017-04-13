@@ -6,5 +6,7 @@ raw = b'{"gamestate":{"map":{"content":["||||||||||||||||||||||||||||","|_______
 data = json.loads( raw.decode('ascii') )
 w = World(data)
 
-for o in w.others:
+shortest = w.shortestPath( w.others )
+
+for o in shortest:
     print(o)

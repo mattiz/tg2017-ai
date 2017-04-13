@@ -12,7 +12,7 @@ def handle_gamestate():
 	# Adding targets
 	targets = []
 	if w.me['isdangerous']:
-		for p in w.others:
+		for p in w.shortestPath(w.others):
 			targets.append(p)
 	else:
 		for sp in w.superpellets:
