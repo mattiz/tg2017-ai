@@ -12,28 +12,30 @@ s.connect((host, port))
 s.send(b"NAME MooG\n")
 
 while True: 
-	reply = s.recv(4096)
-	d = str(reply)[2:-3]
-	data = json.loads( d )
+	reply = s.recv(4096).decode('ascii')
+	parts = reply.strip().split("\n")
 
-	if 'gamestate' in data:
-		w = World( data )
+	for part in parts:
+		data = json.loads( part )
 
-		# Adding targets
-		targets = []
+		if 'gamestate' in data:
+			w = World( data )
 
-		if w.me['isdangerous']:
-			for p in w.pellets:
-				targets.append(p)
-		else:
-			for sp in w.superpellets:
-				targets.append(sp)
+			# Adding targets
+			targets = []
 
-		# Consuming targets
-		if len(targets) > 0:
-			target = targets.pop()
-			move = w.getnextmove( target['x'], target['y'] )
+			if w.me['isdangerous']:
+				for p in w.pellets:
+					targets.append(p)
+			else:
+				for sp in w.superpellets:
+					targets.append(sp)
 
-		# Make move
-		if move:
-			s.send( move )
+			# Consuming targets
+			if len(targets) > 0:
+				target = targets.pop()
+				move = w.getnextmove( target['x'], target['y'] )
+
+			# Make move
+			if move:
+				s.send( move )
