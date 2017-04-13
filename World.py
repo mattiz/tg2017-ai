@@ -7,6 +7,7 @@ from pathfinding.finder.a_star import AStarFinder
 class World:
     map = []
     me = {}
+    pellets = []
     superpellets = []
 
 
@@ -23,6 +24,7 @@ class World:
     #
     def createMap(self, data):
         newMap = []
+        self.pellets = []
         self.superpellets = []
 
         for y, row in enumerate(data['gamestate']['map']['content']):
@@ -36,6 +38,9 @@ class World:
 
                 if col == 'o':
                     self.superpellets.append( {'x': x, 'y': y} )
+
+                if col == '.':
+                    self.pellets.append( {'x': x, 'y': y} )
 
             newMap.append(newRow)
 

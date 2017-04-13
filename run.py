@@ -13,7 +13,6 @@ s.send(b"NAME MooG\n")
 
 while True: 
 	reply = s.recv(4096)
-
 	d = str(reply)[2:-3]
 	data = json.loads( d )
 
@@ -23,8 +22,12 @@ while True:
 		# Adding targets
 		targets = []
 
-		for sp in w.superpellets:
-			targets.append(sp)
+		if w.me['isdangerous']:
+			for p in w.pellets:
+				targets.append(p)
+		else:
+			for sp in w.superpellets:
+				targets.append(sp)
 
 		# Consuming targets
 		if len(targets) > 0:
