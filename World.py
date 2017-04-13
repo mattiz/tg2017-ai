@@ -6,6 +6,7 @@ from pathfinding.finder.a_star import AStarFinder
 class World:
     map = []
     me = {}
+    others = {}
     pellets = []
     superpellets = []
 
@@ -15,7 +16,9 @@ class World:
     #
     def __init__(self, data):
         self.createMap(data)
-        self.getMyPosition(data)
+        self.me = data['gamestate']['you']
+        self.others = data['gamestate']['others']
+        print(self.others)
 
 
     #
@@ -44,13 +47,6 @@ class World:
             newMap.append(newRow)
 
         self.map = newMap
-
-
-    #
-    # Information about me
-    #
-    def getMyPosition(self, data):
-        self.me = data['gamestate']['you']
 
 
     #

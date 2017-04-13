@@ -12,7 +12,7 @@ def handle_gamestate():
 	# Adding targets
 	targets = []
 	if w.me['isdangerous']:
-		for p in w.pellets:
+		for p in w.others:
 			targets.append(p)
 	else:
 		for sp in w.superpellets:
@@ -44,7 +44,9 @@ s.send(b"NAME MooG\n")
 # Main loop
 #
 while True:
-	reply = s.recv(4096).decode('ascii')
+	raw = s.recv(4096)
+	#print(raw)
+	reply = raw.decode('ascii')
 	parts = reply.strip().split("\n")
 
 	for part in parts:
