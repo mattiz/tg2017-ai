@@ -8,6 +8,7 @@ from World import World
 #
 def handle_gamestate():
 	w = World(data)
+
 	# Adding targets
 	targets = []
 	if w.me['isdangerous']:
@@ -22,9 +23,9 @@ def handle_gamestate():
 		target = targets.pop()
 		move = w.getnextmove(target['x'], target['y'])
 
-	# Make move
-	if move:
-		s.send(move)
+		# Make move
+		if move:
+			s.send(move)
 
 
 #
@@ -49,5 +50,21 @@ while True:
 	for part in parts:
 		data = json.loads( part )
 
-		if 'gamestate' in data:
+		if data['messagetype'] == 'stateupdate':
 			handle_gamestate()
+
+		elif data['messagetype'] == 'welcome':
+			print("Welcome!")
+
+		elif data['messagetype'] == 'startofround':
+			print("Start of round!")
+
+		elif data['messagetype'] == 'dead':
+			print("Dead")
+
+		elif data['messagetype'] == 'endofround':
+			print("End of round!")
+
+		else:
+			print("What!")
+			print(data)
