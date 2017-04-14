@@ -47,8 +47,10 @@ class World:
             newMap.append(newRow)
 
         # Add players
-        for o in self.others:
-            newMap[ o['y'] ][ o['x'] ] = '@'
+        if self.me['isdangerous'] == False:
+            for o in self.others:
+                if o['isdangerous'] == False:
+                    newMap[ o['y'] ][ o['x'] ] = '@'
 
         self.map = newMap
 
