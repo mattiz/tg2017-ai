@@ -16,9 +16,9 @@ class World:
     # Constructor
     #
     def __init__(self, data):
-        self.createMap(data)
         self.me = data['gamestate']['you']
         self.others = data['gamestate']['others']
+        self.createMap(data)
 
 
     #
@@ -46,7 +46,28 @@ class World:
 
             newMap.append(newRow)
 
+        # Add players
+        for o in self.others:
+            newMap[ o['y'] ][ o['x'] ] = '@'
+
         self.map = newMap
+
+    #
+    # Print ascii version of map
+    #
+    def printMap(self):
+        for col in self.map:
+            for row in col:
+                if row == 0:
+                    print('  ', end='')
+
+                elif row == 1:
+                    print( '##', end='' )
+
+                elif row == '@':
+                    print( '♠ ', end='' )
+
+            print()
 
 
     #

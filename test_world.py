@@ -8,5 +8,7 @@ w = World(data)
 
 shortest = w.shortestPath( w.others )
 
-for o in shortest:
-    print(o)
+#for o in shortest:
+#    print(o)
+
+w.printMap()
