@@ -38,9 +38,9 @@ def consumeTargets(targets, w):
 def calculateTargets(w):
 	targets = []
 
-	if w.me['isdangerous']:
-		prey = list( filter( lambda t: t['isdangerous'] == False, w.others ) )
+	prey = list(filter(lambda t: t['isdangerous'] == False, w.others))
 
+	if w.me['isdangerous'] and len(prey) > 0:
 		for p in w.shortestPath(prey):
 			targets.append(p)
 
