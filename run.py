@@ -17,11 +17,14 @@ def handle_gamestate():
 
 	if w.me['isdangerous']:
 		for p in w.shortestPath(w.others):
-		#for p in w.others:
 			targets.append(p)
-	else:
+
+	elif len(w.superpellets) > 0:
 		for sp in w.shortestPath(w.superpellets):
-		# for sp in w.superpellets:
+			targets.append(sp)
+
+	elif len(w.pellets) > 0:
+		for sp in w.pellets:
 			targets.append(sp)
 
 	# Consuming targets
