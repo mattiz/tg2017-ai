@@ -39,7 +39,9 @@ def calculateTargets(w):
 	targets = []
 
 	if w.me['isdangerous']:
-		for p in w.shortestPath(w.others):
+		prey = list( filter( lambda t: t['isdangerous'] == False, w.others ) )
+
+		for p in w.shortestPath(prey):
 			targets.append(p)
 
 	elif len(w.superpellets) > 0:
