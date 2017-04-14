@@ -13,6 +13,29 @@ def handle_gamestate():
 	w = World(data)
 
 	# Adding targets
+	targets = calculateTargets(w)
+
+	# Consuming targets
+	consumeTargets(targets, w)
+
+
+#
+# Consume targets
+#
+def consumeTargets(targets, w):
+	if len(targets) > 0:
+		target = aquireTarget(targets)
+		move = w.getnextmove(target['x'], target['y'])
+
+		# Make move
+		if move:
+			s.send(move)
+
+
+#
+# Calculate targets
+#
+def calculateTargets(w):
 	targets = []
 
 	if w.me['isdangerous']:
@@ -27,14 +50,7 @@ def handle_gamestate():
 		for sp in w.pellets:
 			targets.append(sp)
 
-	# Consuming targets
-	if len(targets) > 0:
-		target = aquireTarget(targets)
-		move = w.getnextmove(target['x'], target['y'])
-
-		# Make move
-		if move:
-			s.send(move)
+	return targets
 
 
 #
