@@ -20,5 +20,6 @@ The program is written in Python 3
 3. Run using "python run.py"
 
 ## Example
+Click to start video
 
 [![Video of AI in action](https://img.youtube.com/vi/CnHMNM0SPXk/0.jpg)](http://www.youtube.com/watch?v=CnHMNM0SPXk)
