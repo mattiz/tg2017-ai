@@ -109,7 +109,7 @@ s.send(b"NAME MooG\n")
 # Main loop
 #
 while True:
-	raw = s.recv(4096)
+	raw = s.recv(10000)
 	#print(raw)
 	reply = raw.decode('ascii')
 	parts = reply.strip().split("\n")
